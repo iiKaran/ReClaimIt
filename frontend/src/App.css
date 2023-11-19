@@ -1,0 +1,15 @@
+/* write your css here */
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+nav{
+}
+/* .bd{
+    border: 2px solid red !important; 
+} */
+
+label,p{
+    color: white;
+}
