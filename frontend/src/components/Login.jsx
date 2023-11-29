@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import Axios from '../utils/Axios';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import { useContext } from 'react';
 import { useDispatch } from'react-redux';
 import { setToken } from '../slices/authSlice';
 import { apiConnector } from '../services/apiConnector';
+import { setUser } from '../slices/authSlice';
 const BASE_URL = "http://localhost:4000/routes"
 export default function () {
   const navigate = useNavigate();
@@ -16,10 +17,15 @@ export default function () {
     try{
     const url = BASE_URL + "/login"
     const response = await apiConnector("POST", url, data)
+    if (!response.data.success) {
+      throw new Error(response.data.message)
+  }
     console.log(" login response: ", response.data)
-  dispatch (setToken(response.data.token));
+    dispatch (setToken(response.data.token));
     toast.success("Login Successfully");
     localStorage.setItem("token", JSON.stringify(response.data.token)); 
+    dispatch (setToken(response.data.user));
+    localStorage.setItem("user", JSON.stringify(response.data.user));
     navigate("/allitems")
     }
     catch(err){

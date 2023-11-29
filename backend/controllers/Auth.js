@@ -71,14 +71,16 @@ exports.LoginInMethod = async(req, res)=>{
             success:false , 
             message:"No User is Registered"
         })
-        const payload = {email:email, id:findUser._id}; 
-        console.log(payload)
-        require("dotenv").config();
-        const token = jwt.sign(payload,process.env.SECRET_KEY,{
-         expiresIn:"7D"
-        });
-
-        if(bcrypt.compare(password, findUser.password)){
+       
+        if(await (bcrypt.compare(password, findUser.password))){
+            require("dotenv").config();
+            const payload = {
+                email: findUser.email,
+                id: findUser._id,
+                
+            }
+            const token = jwt.sign(payload, process.env.SECRET_KEY);
+            console.log(token);
             return res.status(200).json({
                 success:true, 
                 message:"User login", 

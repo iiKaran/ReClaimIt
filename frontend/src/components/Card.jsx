@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Card({check, name ,loc, desc, img}) {
+export default function Card({check, name ,loc, date, desc, img,link}) {
+  var dateObject = new Date(date );
   return (
-    <div className="my-5 px-4 w-[98%] md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 m-auto">
+    <div className="my-5    mb-3    m-6">
     {/* Article */}
-    <article className="overflow-hidden rounded-lg shadow-lg">
+    <article className="overflow-hidden bd w-[100%] rounded-lg shadow-lg">
       <a href="#">
         <img
           alt="Placeholder"
@@ -19,7 +20,7 @@ export default function Card({check, name ,loc, desc, img}) {
             {name}
           </a>
         </h1>
-        <p className="text-grey-darker text-sm dark:text-white ">11/1/19</p>
+        <p className="text-grey-darker text-sm dark:text-white ">{dateObject.getDay()+"-"+dateObject.getMonth()  + "-"+  dateObject.getFullYear() }</p>
       </header>
       <p className="desc dark:text-white p-2 opacity-60 mt-2 mb-2">
        {desc}
@@ -41,7 +42,7 @@ export default function Card({check, name ,loc, desc, img}) {
           className="no-underline text-grey-darker hover:text-red-dark"
           href="#"
         >
-          {check && <Link className="text-white bg-green-500 p-3 rounded-md px-5 font-medium " to="">Claim</Link>}
+          {check && <Link className="text-white bg-green-500 p-3 rounded-md px-5 font-medium " to={link }>Claim</Link>}
           {!check && <Link className="text-white bg-green-500 p-3 rounded-md px-5 font-medium " to="/login">login to claim</Link>}
         </a>
       </footer>

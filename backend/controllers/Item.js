@@ -1,6 +1,6 @@
 const User = require("../models/User"); 
 const Item = require("../models/Item"); 
-
+const {uploadImagetoCloudinary} = require("../utilities/uploadImage");
 
 
 exports.getAllItems = async(req, res)=>{
@@ -73,7 +73,28 @@ exports.PostNewItem = async (req, res) =>{
         })
     }
 }
-
+exports.addPicture = async (req, res) => {
+    try {
+        console.log("got rew")
+      const itemPic = req.files.itemPic; 
+      const image = await uploadImagetoCloudinary(
+        itemPic,
+        "StudyNotion",
+      )
+      console.log(image)
+      res.send({
+        success: true,
+        message: `Image Updated successfully`,
+        data: image.secure_url,
+      })
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: error.message,
+      })
+    }
+  };
+  
 // all items 
 // get one of posted items
 // post new items 

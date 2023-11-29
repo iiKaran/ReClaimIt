@@ -5,17 +5,23 @@ import Axios from "../utils/Axios"
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../slices/authSlice';
+import { setUser } from '../slices/authSlice';
+import {apiConnector} from '../services/apiConnector'
 // import { AppContext } from '../context/AppContext'
 export default function
   () {
     const dispatch = useDispatch();
   const {token}= useSelector((state)=>state.auth)
   console.log("the token is ",token)
+  
   const [logIn, setLogin]= useState(false);
   const navigate = useNavigate();
   function logOutHandler(){
     toast.error("loging out...")
     dispatch((setToken(null))); 
+    dispatch((setUser(null)));
+    localStorage.setItem("token",null);
+    localStorage.setItem("user",null);
     navigate("/")
   }
   
